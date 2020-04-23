@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewData["Title"] = "Explore";
+}
+@model Assignment4_2.Models.UniversityData
+@{int i = 0;}
+
+<div>
+    <form asp-controller="Home" asp-action="GetUniversitiesByState" method="post">
+        <select name="state">
+            <option value="AL">Alabama</option>
+            <option value="AK">Alaska</option>
+        </select>
+        <button type="submit">Search</button>
+    </form>
+    <br />
+    <form asp-controller="Home" asp-action="GetUniversitiesByName" method="post">
+        <input type="text" class="rounded" name="universityName" placeholder="Search by University Name">
+        <button type="submit">Search</button>
+    </form>
+</div>
+<div>
+
+    @if (Model != null)
+    {
+
+
+        <div>
+            <table class="table-bordered table-dark table-striped">
+                <tr>
+                    <th></th>
+                    <th>School Name </th>
+                    <th>School URL </th>
+                    <th> Tution Fee</th>
+                    <th> Student Strength  </th>
+                    <th></th>
+
+                </tr>
+
+                @foreach (var item in Model.results)
+                {
+                    i = i + 1;
+                    <tr>
+                        <td>
+                            @i
+                        </td>
+                        <td>
+                            @item.schoolName
+                        </td>
+
+                        <td>
+                            @{
+                                string url = "https://" + item.schoolUrl;
+                                <a href=@url>@item.schoolUrl</a>
+                            }
+
+                        </td>
+                        <td>
+                            @if (item.tuitionOutState != null)
+                                @item.tuitionOutState
+
+                            @if (item.tuitionOutState == null)
+                            {
+                                <span>No Data</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.studentSize != null)
+                                @item.studentSize
+
+                            @if (item.studentSize == null)
+                            {
+                                <span>No Data</span>
+                            }
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    }
+
+
+</div>
+
