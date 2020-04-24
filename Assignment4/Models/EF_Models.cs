@@ -37,6 +37,10 @@ namespace Assignment4.Models
             public string Name { get; set; }
             public string email { get; set; }
             public int contact { get; set; }
+
+            public string InterestedMajor { get; set; }
+            public string University { get; set; }
+
             public List<Applications> applications { get; set; }
         }
         public class UniversityData

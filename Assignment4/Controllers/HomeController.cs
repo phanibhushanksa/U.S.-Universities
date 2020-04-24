@@ -12,6 +12,9 @@ using Assignment4;
 //using Assignment4.Models;
 using static Assignment4.Models.EF_Models;
 using Assignment4.Models;
+using Assignment4.DataAccess;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Diagnostics.Eventing.Reader;
 
 namespace Assignment4
 {
@@ -21,8 +24,10 @@ namespace Assignment4
         HttpClient httpClient;
 
         private readonly ILogger<HomeController> _logger;
-        public HomeController(ILogger<HomeController> logger)
+         ApplicationDbContext applicationDbContext;
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext applicationDbContext)
         {
+            this.applicationDbContext = applicationDbContext;
             _logger = logger;
             httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Accept.Clear();
@@ -109,7 +114,24 @@ namespace Assignment4
         [HttpPost]
         public IActionResult Login(LogIn logIn)
         {
-            return View();
+            LogIn k = applicationDbContext.LogIn.Find(logIn.email);
+            //var UserCheck = applicationDbContext.LogIn.Where(x => x.email == logIn.email && x.password == logIn.password);
+            if (k!=null)
+            {
+                if (k.password == logIn.password)
+                {
+                    ViewBag.successMessage = "Login Successful";
+                    return View("Index");
+                }
+                else
+                    ViewBag.successMessage = "Invalid Credentials";
+            }
+            else
+            {
+                ViewBag.successMessage = "User not found, please Sign Up and then Login";
+                
+            }
+                return View();
         }
 
         public IActionResult LogIn()
@@ -126,9 +148,23 @@ namespace Assignment4
         [HttpPost]
         public IActionResult SignUp(LogIn logIn)
         {
+            if(ModelState.IsValid)
+            {
+                applicationDbContext.LogIn.Add(logIn);
+                applicationDbContext.SaveChanges();
+            }
             return View("LogIn");
         }
 
+        public IActionResult Apply(Student student)
+        {
+            if (ModelState.IsValid)
+            {
+                applicationDbContext.Student.Add(student);
+                applicationDbContext.SaveChanges();
+            }
+            return View("ApplyForm");
+        }
         public IActionResult AboutUs()
         {
             return View();

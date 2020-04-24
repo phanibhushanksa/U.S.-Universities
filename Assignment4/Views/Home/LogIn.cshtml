@@ -1,7 +1,9 @@
 ﻿
 @{
     ViewData["Title"] = "Login";
+   
 }
+
 
 <html>
 <head>
@@ -103,6 +105,9 @@
             <p> Click here for <a asp-area="" asp-controller="Home" asp-action="SignUp">SignUp</a></p>
         </div>
     </form>
+    <span>
+        @ViewBag.successMessage
+    </span>
 
 </body>
 </html>
