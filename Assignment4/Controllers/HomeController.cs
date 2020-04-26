@@ -41,6 +41,7 @@ namespace Assignment4
         [HttpPost]
         public IActionResult GetUniversitiesByName(string universityName)
         {
+            if(universityName!=null)
             universityName = universityName.Replace(" ", "%20");
             string apiExtension = "school.name=" + universityName;
            
@@ -86,7 +87,7 @@ namespace Assignment4
             string responseString = "";
             UniversityData data = null;
 
-            // Connect to the IEXTrading API and retrieve information
+            
             httpClient.BaseAddress = new Uri(API_PATH);
             HttpResponseMessage response = httpClient.GetAsync(API_PATH).GetAwaiter().GetResult();
 
@@ -106,9 +107,10 @@ namespace Assignment4
             if (!responseString.Equals(""))
             {
                 data = System.Text.Json.JsonSerializer.Deserialize<UniversityData>(responseString);
+               
                 //data = JsonConvert.DeserializeObject<UniversityData>(responseString);
             }
-            apiResponse = data;
+           
             return View("Explore", data);
         }
 
@@ -196,8 +198,40 @@ namespace Assignment4
 
         
         public IActionResult Details(int id)
-        {       
-            return View();
+        {
+            string apiExtension = "id=" + id;
+            apiFields = "&_fields=id,school.school_url,school.name,2018.student.size,school.city,latest.cost.tuition.out_of_state,school.accreditor_code,&per_page=5";
+
+            string API_PATH = BASE_URL + apiExtension + apiFields + apiKey;
+            string responseString = "";
+            UniversityData data = null;
+
+            // Connect to the IEXTrading API and retrieve information
+            httpClient.BaseAddress = new Uri(API_PATH);
+            HttpResponseMessage response = httpClient.GetAsync(API_PATH).GetAwaiter().GetResult();
+
+            // Read the Json objects in the API response
+            if (response.IsSuccessStatusCode)
+            {
+                responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                responseString = responseString.Replace("school.name", "schoolName");
+                responseString = responseString.Replace("school.school_url", "schoolUrl");
+                responseString = responseString.Replace("2018.student.size", "studentSize");
+                responseString = responseString.Replace("school.city", "schoolCity");
+                responseString = responseString.Replace("latest.cost.tuition.out_of_state", "tuitionOutState");
+                responseString = responseString.Replace("school.accreditor_code", "accCode");
+
+            }
+
+            // Parse the Json strings as C# objects
+            if (!responseString.Equals(""))
+            {
+                data = System.Text.Json.JsonSerializer.Deserialize<UniversityData>(responseString);
+                //data = JsonConvert.DeserializeObject<UniversityData>(responseString);
+            }
+            
+            return View(data);
+
         }
 
 
@@ -219,27 +253,15 @@ namespace Assignment4
                     return View();
                 }
             }
-            return View("LogIn");
+            return View();
         }
 
-        //public IActionResult Apply(Student student)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        applicationDbContext.Student.Add(student);
-        //        applicationDbContext.SaveChanges();
-        //    }
-        //    return View("ApplyForm");
-        //}
+     
         public IActionResult AboutUs()
         {
             return View();
         }
-        //public IActionResult ApplyForm()
-        //{
-        //    return View();
-        //}
-
+       
 
         public IActionResult Index()
         {

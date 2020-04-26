@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Assignment4.DataAccess;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 //using System.Data.Entity;
 
 namespace Assignment4.Models
@@ -48,8 +49,12 @@ namespace Assignment4.Models
             public string accCode { get; set; }
             public string schoolName { get; set; }
             public int? studentSize { get; set; }
+
+            [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
             [Key]
             public int id { get; set; }
+
+            public int likesCount { get; set; }
 
         }
     }

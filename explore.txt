@@ -1,0 +1,20 @@
+
+ <td>
+                                @if (item.tuitionOutState != null)
+                                    @item.tuitionOutState
+
+                                @if (item.tuitionOutState == null)
+                                {
+                                    <span>No Data</span>
+                                }
+                            </td>
+
+ <td>
+                                @if (item.studentSize != null)
+                                    @item.studentSize
+
+                                @if (item.studentSize == null)
+                                {
+                                    <span>No Data</span>
+                                }
+                            </td>

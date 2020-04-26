@@ -19,40 +19,6 @@ namespace Assignment4.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Assignment4.Models.EF_Models+Applications", b =>
-                {
-                    b.Property<string>("StudentEmail")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Major")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StudentName")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("University")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("StudentEmail");
-
-                    b.HasIndex("StudentName");
-
-                    b.ToTable("Applications");
-                });
-
-            modelBuilder.Entity("Assignment4.Models.EF_Models+LogIn", b =>
-                {
-                    b.Property<string>("email")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("email");
-
-                    b.ToTable("LogIn");
-                });
-
             modelBuilder.Entity("Assignment4.Models.EF_Models+Results", b =>
                 {
                     b.Property<int>("id")
@@ -63,13 +29,16 @@ namespace Assignment4.Migrations
                     b.Property<string>("accCode")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("likesCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("schoolCity")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("schoolName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("schoolUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("schoolZip")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("studentSize")
@@ -83,33 +52,17 @@ namespace Assignment4.Migrations
                     b.ToTable("Results");
                 });
 
-            modelBuilder.Entity("Assignment4.Models.EF_Models+Student", b =>
+            modelBuilder.Entity("Assignment4.Models.EF_Models+SignUp", b =>
                 {
-                    b.Property<string>("Name")
+                    b.Property<string>("email")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("InterestedMajor")
+                    b.Property<string>("password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("University")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("email");
 
-                    b.Property<int>("contact")
-                        .HasColumnType("int");
-
-                    b.Property<string>("email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Name");
-
-                    b.ToTable("Student");
-                });
-
-            modelBuilder.Entity("Assignment4.Models.EF_Models+Applications", b =>
-                {
-                    b.HasOne("Assignment4.Models.EF_Models+Student", null)
-                        .WithMany("applications")
-                        .HasForeignKey("StudentName");
+                    b.ToTable("SignUp");
                 });
 #pragma warning restore 612, 618
         }

@@ -7,9 +7,28 @@
 
 <head>
     <style>
-        .container
-        {
+        .container {
+            padding: 16px;
+            width: 100%;
             margin-top: 100px;
+        }
+       
+        label {
+            margin: 20px;
+        }
+        #uName
+        {
+            max-width: 300px;
+            padding : 10px;
+        }
+        table
+        {
+            max-width: 100%;
+            min-width: 100%;
+        }
+        select
+        {
+            height: 40px;
         }
     </style>
 </head>
@@ -72,14 +91,14 @@
                 <option value="WY">Wyoming</option>
 
             </select>
-            <button type="submit" class="btn">Go</button>
+            <button type="submit" class="btn btn-dark">Go</button>
         </form>
     </div>
     <div class="col-sm-6">
         <form asp-controller="Home" asp-action="GetUniversitiesByName" method="post">
             <label>Search by Name</label>
-            <input type="text" class="rounded" name="universityName" placeholder="Florida">
-            <button type="submit" class="btn">Go</button>
+            <input type="text" id = "uName" required class="rounded" name="universityName" placeholder="University of South Florida">
+            <button type="submit" class="btn btn-dark">Go</button>
         </form>
     </div>
 </div>
@@ -88,72 +107,59 @@
 
     @if (Model != null)
     {
-        <div>
-            <table class="table-bordered table-dark table-striped table-hover .table-responsive{-sm|-md|-lg|-xl}">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>S.No</th>
-                        <th>School Name </th>
-                        <th>School URL </th>
-                        <th> Tution Fee</th>
-                        <th>School City</th>
-                        <th> Student Strength  </th>
-                        
-
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.results)
-                    {
-                        i = i + 1;
+        if (Model.metadata.total != 0)
+        {
+            <div>
+                <table class="table-bordered table-striped table-hover .table-responsive{-sm|-md|-lg|-xl}">
+                    <thead class="thead-dark">
                         <tr>
-                            <td>
-                                @i
-                            </td>
-                            <td>
-                                @item.schoolName
-                            </td>
-
-                            <td>
-                                @{
-                                    string url = "https://" + item.schoolUrl;
-                                    <a href=@url>@item.schoolUrl</a>
-                                }
-
-                            </td>
-                            <td>
-                                @if (item.tuitionOutState != null)
-                                    @item.tuitionOutState
-
-                                @if (item.tuitionOutState == null)
-                                {
-                                    <span>No Data</span>
-                                }
-                            </td>
-                            <td>
-                                @item.schoolCity
-                            </td>
-                            <td>
-                                @if (item.studentSize != null)
-                                    @item.studentSize
-
-                                @if (item.studentSize == null)
-                                {
-                                    <span>No Data</span>
-                                }
-                            </td>
-                            <td>
-                                <div class="text-center">
-                                    <a asp-controller="Home" asp-action="Details" asp-route-id=@item.id>Details</a>
-                                </div>
-                            </td>
+                            <th>S.No</th>
+                            <th>School Name </th>
+                            <th>School URL </th>
+                            <th>School City</th>
+                            <th class="thead-dark"></th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.results)
+                        {
+                            i = i + 1;
+                            <tr>
+                                <td>
+                                    @i
+                                </td>
+                                <td>
+                                    @item.schoolName
+                                </td>
 
+                                <td>
+                                    @{
+                                        string url = "https://" + item.schoolUrl;
+                                        <a href=@url>@item.schoolUrl</a>
+                                    }
+
+                                </td>
+
+                                <td>
+                                    @item.schoolCity
+                                </td>
+
+                                <td>
+                                    <div class="text-center">
+                                        <a asp-controller="Home" asp-action="Details" asp-route-id=@item.id>Details</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <span class="text-danger">No results found matching your search criteria, Search Again!</span>
+        }
     }
+
 </div>
 

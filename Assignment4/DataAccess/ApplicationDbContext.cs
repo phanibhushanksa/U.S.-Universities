@@ -16,8 +16,7 @@ namespace Assignment4.DataAccess
       
         public DbSet<SignUp> SignUp { get; set; }
        
-        public DbSet<Results> Universities { get; set; }
+        public DbSet<Results> Results { get; set; }
 
-        public DbSet<Results> Favourites { get; set; }
     }
 }

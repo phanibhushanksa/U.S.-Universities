@@ -3,10 +3,98 @@
     ViewData["Title"] = "Details";
 }
 
-@model Assignment4.Models.EF_Models.Results
 
-   <div>
-       <label>Name</label>
-       <span>@Model.schoolName</span>
-   </div>
 
+@model Assignment4.Models.EF_Models.UniversityData
+
+@{string url = "https://" + Model.results[0].schoolUrl;}
+
+
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        *{
+            box-sizing: border-box;
+        }
+
+        /* Full-width input fields */
+        p {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+        }
+
+
+        hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
+        }
+
+        /* Add padding to container elements */
+        .container {
+            padding: 16px;
+            max-width: 70%;
+        }
+
+        /* Clear floats */
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>@Model.results[0].schoolName</h1>
+        <a href=@url><h6 class="card-subtitle mb-2 text-muted">@Model.results[0].schoolUrl</h6></a>
+        <hr />
+
+        <label><b>City:</b></label>
+        <p class="card-text">@Model.results[0].schoolCity</p>
+        <br />
+
+        <label for="Contact no"><b>Accrediation:</b></label>
+        @if (@Model.results[0].accCode != null)
+        {<p class="card-text">@Model.results[0].accCode</p> }
+    else
+    {
+        <p>Data Not Available</p>
+    }
+        <br />
+
+        <label><b>Tuition Fee:</b></label>
+        @if (@Model.results[0].tuitionOutState != null)
+        {
+            <p>@Model.results[0].tuitionOutState</p>
+        }
+        else
+        {
+            <p>Data Not Available</p>
+        }
+        <br />
+
+        <label><b>Student Size:</b></label>
+        @if (Model.results[0].studentSize != null)
+        {
+            <p class="card-text">@Model.results[0].studentSize</p>
+        }
+        else
+        {
+            <p class="card-text">Data Not Available</p>
+        }
+
+        <a href="#" class="card-link">Add to Favourites</a>
+        <br />
+    </div>
+   
+
+</body>
+</html>
