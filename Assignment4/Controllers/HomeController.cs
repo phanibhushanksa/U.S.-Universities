@@ -145,7 +145,7 @@ namespace Assignment4
                 data = System.Text.Json.JsonSerializer.Deserialize<UniversityData>(responseString);
                 //data = JsonConvert.DeserializeObject<UniversityData>(responseString);
             }
-
+            ViewBag.State = state;
             return View("Charts", data);
         }
 
@@ -190,7 +190,8 @@ namespace Assignment4
 
         public IActionResult Charts()
         {
-            return GetUniversitiesByStateChart("Al");
+            ViewBag.State = "AL";
+            return GetUniversitiesByStateChart("AL");
         }
 
         
@@ -214,7 +215,7 @@ namespace Assignment4
                 else
                 {
                     ViewBag.errorCode = 1;
-                    ViewBag.errorMessage = "User Already Exists";
+                    ViewBag.errorMessage = "You have already registered, Thank you!";
                     return View();
                 }
             }
