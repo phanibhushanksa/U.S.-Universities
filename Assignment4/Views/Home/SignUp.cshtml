@@ -61,6 +61,7 @@
         /* Add padding to container elements */
         .container {
             padding: 16px;
+            max-width: 500px;
         }
 
         /* Clear floats */
@@ -68,6 +69,12 @@
             content: "";
             clear: both;
             display: table;
+        }
+
+        span
+        {
+           
+            margin: auto;
         }
     </style>
 </head>
@@ -89,12 +96,14 @@
             <label for="psw-repeat"><b>Repeat Password</b></label>
             <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
 
-            <label>
-                <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
-            </label>
+            @if(ViewBag.errorCode == 1)
+            {
+                <span class="text-danger text-center">@ViewBag.errorMessage</span>
+                <br/>
+            }
+
 
             <div class="clearfix text-center">
-
                 <button type="submit" class="signupbtn">Sign Up</button>
             </div>
         </div>

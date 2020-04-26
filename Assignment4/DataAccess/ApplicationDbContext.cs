@@ -13,11 +13,9 @@ namespace Assignment4.DataAccess
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-        public DbSet<Applications> Applications { get; set; }
+      
         public DbSet<LogIn> LogIn { get; set; }
-        public DbSet<Student> Student { get; set; }
-        //public DbSet<UniversityData> UniversityData { get; set; }
-        //public DbSet<Metadata> Metadata { get; set; }
+       
         public DbSet<Results> Results { get; set; }
 
 

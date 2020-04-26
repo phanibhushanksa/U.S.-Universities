@@ -6,9 +6,16 @@
     <title>@ViewData["Title"]US Universities</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        .custom{
+            float:right;
+            padding-left: 50px;
+        }
+
+    </style>
 </head>
 <body>
-    <h1 class="">Welcome to US Universtiy Details</h1>
+    <h1 class="text-center">Welcome to US Universtiy Details</h1>
     <br />
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -24,18 +31,22 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Home" asp-action="Explore">Explore</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Home" asp-action="LogIn">LogIn</a>
-                    </li>
+
 
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Home" asp-action="ApplyForm">Apply</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Home" asp-action="AboutUs">AboutUs</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="Charts">Charts</a>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="AboutUs">AboutUs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link custom" asp-controller="Home" asp-action="LogIn">LogIn</a>
+                    </li>
                 </ul>
 
             </div>

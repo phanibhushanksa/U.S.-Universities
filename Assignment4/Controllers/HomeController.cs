@@ -21,7 +21,10 @@ namespace Assignment4
     public class HomeController : Controller
     {
         string BASE_URL = "https://api.data.gov/ed/collegescorecard/v1/schools.json?";
+        string apiFields = "&_fields=id,school.school_url,school.name,2018.student.size,school.city,latest.cost.tuition.out_of_state,school.accreditor_code,&per_page=30";
+        string apiKey = "&api_key=ck1LVrQunLhfsjSgoithxWggF6ZbNSp3SvalD4d4";
         HttpClient httpClient;
+        UniversityData apiResponse = null;
 
         private readonly ILogger<HomeController> _logger;
          ApplicationDbContext applicationDbContext;
@@ -38,15 +41,14 @@ namespace Assignment4
         [HttpPost]
         public IActionResult GetUniversitiesByName(string universityName)
         {
+            universityName = universityName.Replace(" ", "%20");
             string apiExtension = "school.name=" + universityName;
-            string apiFields = "&_fields=id,school.school_url,school.name,2018.student.size,school.zip,latest.cost.tuition.out_of_state,school.accreditor_code,";
-            string apiKey = "&api_key=ck1LVrQunLhfsjSgoithxWggF6ZbNSp3SvalD4d4";
+           
             string API_PATH = BASE_URL + apiExtension + apiFields + apiKey;
 
             string responseString = "";
             UniversityData data = null;
-
-            // Connect to the IEXTrading API and retrieve information
+      
             httpClient.BaseAddress = new Uri(API_PATH);
             HttpResponseMessage response = httpClient.GetAsync(API_PATH).GetAwaiter().GetResult();
 
@@ -57,19 +59,20 @@ namespace Assignment4
                 responseString = responseString.Replace("school.name", "schoolName");
                 responseString = responseString.Replace("school.school_url", "schoolUrl");
                 responseString = responseString.Replace("2018.student.size", "studentSize");
-                responseString = responseString.Replace("school.zip", "schoolZip");
+                responseString = responseString.Replace("school.city", "schoolCity");
                 responseString = responseString.Replace("latest.cost.tuition.out_of_state", "tuitionOutState");
                 responseString = responseString.Replace("school.accreditor_code", "accCode");
-
             }
 
             // Parse the Json strings as C# objects
             if (!responseString.Equals(""))
             {
                 data = System.Text.Json.JsonSerializer.Deserialize<UniversityData>(responseString);
+
                 //data = JsonConvert.DeserializeObject<UniversityData>(responseString);
             }
-
+            ViewBag.search = "name";
+            apiResponse = data;
             return View("Explore", data);
         }
 
@@ -77,8 +80,7 @@ namespace Assignment4
         public IActionResult GetUniversitiesByState(string state)
         {
             string apiExtension = "school.state=" + state;
-            string apiFields = "&_fields=id,school.school_url,school.name,2018.student.size,school.zip,latest.cost.tuition.out_of_state,school.accreditor_code,";
-            string apiKey = "&api_key=ck1LVrQunLhfsjSgoithxWggF6ZbNSp3SvalD4d4";
+          //  apiFields = "&_fields=id,school.school_url,school.name,2018.student.size,school.city,latest.cost.tuition.out_of_state,school.accreditor_code,&per_page=30";
             string API_PATH = BASE_URL + apiExtension + apiFields + apiKey;
 
             string responseString = "";
@@ -95,7 +97,43 @@ namespace Assignment4
                 responseString = responseString.Replace("school.name", "schoolName");
                 responseString = responseString.Replace("school.school_url", "schoolUrl");
                 responseString = responseString.Replace("2018.student.size", "studentSize");
-                responseString = responseString.Replace("school.zip", "schoolZip");
+                responseString = responseString.Replace("school.city", "schoolCity");
+                responseString = responseString.Replace("latest.cost.tuition.out_of_state", "tuitionOutState");
+                responseString = responseString.Replace("school.accreditor_code", "accCode");
+            }
+
+            // Parse the Json strings as C# objects
+            if (!responseString.Equals(""))
+            {
+                data = System.Text.Json.JsonSerializer.Deserialize<UniversityData>(responseString);
+                //data = JsonConvert.DeserializeObject<UniversityData>(responseString);
+            }
+            apiResponse = data;
+            return View("Explore", data);
+        }
+
+        [HttpPost]
+        public IActionResult GetUniversitiesByStateChart(string state)
+        {
+            string apiExtension = "school.state=" + state;
+            apiFields = "&_fields=id,school.school_url,school.name,2018.student.size,school.city,latest.cost.tuition.out_of_state,school.accreditor_code,&per_page=5";
+
+            string API_PATH = BASE_URL + apiExtension + apiFields + apiKey;
+            string responseString = "";
+            UniversityData data = null;
+
+            // Connect to the IEXTrading API and retrieve information
+            httpClient.BaseAddress = new Uri(API_PATH);
+            HttpResponseMessage response = httpClient.GetAsync(API_PATH).GetAwaiter().GetResult();
+
+            // Read the Json objects in the API response
+            if (response.IsSuccessStatusCode)
+            {
+                responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                responseString = responseString.Replace("school.name", "schoolName");
+                responseString = responseString.Replace("school.school_url", "schoolUrl");
+                responseString = responseString.Replace("2018.student.size", "studentSize");
+                responseString = responseString.Replace("school.city", "schoolCity");
                 responseString = responseString.Replace("latest.cost.tuition.out_of_state", "tuitionOutState");
                 responseString = responseString.Replace("school.accreditor_code", "accCode");
 
@@ -108,7 +146,7 @@ namespace Assignment4
                 //data = JsonConvert.DeserializeObject<UniversityData>(responseString);
             }
 
-            return View("Explore", data);
+            return View("Charts", data);
         }
 
         [HttpPost]
@@ -121,15 +159,21 @@ namespace Assignment4
                 if (k.password == logIn.password)
                 {
                     ViewBag.successMessage = "Login Successful";
+                    ViewBag.successCode = 1;
                     return View("Index");
                 }
                 else
+                {
                     ViewBag.successMessage = "Invalid Credentials";
+                    ViewBag.successCode = 0;
+                }
+
             }
             else
             {
-                ViewBag.successMessage = "User not found, please Sign Up and then Login";
-                
+                ViewBag.successMessage = "User not found, please SignUp to Login";
+                ViewBag.successCode = 0;
+
             }
                 return View();
         }
@@ -144,14 +188,36 @@ namespace Assignment4
             return View();
         }
 
+        public IActionResult Charts()
+        {
+            return GetUniversitiesByStateChart("Al");
+        }
+
+        
+        public IActionResult Details(int id)
+        {
+            Results res = apiResponse.results.First<Results>(i => i.id==id);
+            return View(res);
+        }
+
 
         [HttpPost]
         public IActionResult SignUp(LogIn logIn)
         {
             if(ModelState.IsValid)
             {
-                applicationDbContext.LogIn.Add(logIn);
-                applicationDbContext.SaveChanges();
+                LogIn k = applicationDbContext.LogIn.Find(logIn.email);
+                if (k == null)
+                {
+                    applicationDbContext.LogIn.Add(logIn);
+                    applicationDbContext.SaveChanges();
+                }
+                else
+                {
+                    ViewBag.errorCode = 1;
+                    ViewBag.errorMessage = "User Already Exists";
+                    return View();
+                }
             }
             return View("LogIn");
         }
@@ -194,4 +260,5 @@ namespace Assignment4
         }
 
     }
+    
 }
