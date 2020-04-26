@@ -13,7 +13,7 @@ namespace Assignment4.Models
     public class EF_Models
     {
 
-        public class LogIn
+        public class SignUp
         {
             [Key]
             [Required]

@@ -115,7 +115,7 @@ namespace Assignment4
         [HttpPost]
         public IActionResult GetUniversitiesByStateChart(string state)
         {
-            string apiExtension = "school.state=" + state;
+            string apiExtension = "school.state=" + state + "&latest.cost.tuition.out_of_state__range=100..";
             apiFields = "&_fields=id,school.school_url,school.name,2018.student.size,school.city,latest.cost.tuition.out_of_state,school.accreditor_code,&per_page=5";
 
             string API_PATH = BASE_URL + apiExtension + apiFields + apiKey;
@@ -150,9 +150,9 @@ namespace Assignment4
         }
 
         [HttpPost]
-        public IActionResult Login(LogIn logIn)
+        public IActionResult Login(SignUp logIn)
         {
-            LogIn k = applicationDbContext.LogIn.Find(logIn.email);
+            SignUp k = applicationDbContext.SignUp.Find(logIn.email);
             //var UserCheck = applicationDbContext.LogIn.Where(x => x.email == logIn.email && x.password == logIn.password);
             if (k!=null)
             {
@@ -195,21 +195,20 @@ namespace Assignment4
 
         
         public IActionResult Details(int id)
-        {
-            Results res = apiResponse.results.First<Results>(i => i.id==id);
-            return View(res);
+        {       
+            return View();
         }
 
 
         [HttpPost]
-        public IActionResult SignUp(LogIn logIn)
+        public IActionResult SignUp(SignUp signUp)
         {
             if(ModelState.IsValid)
             {
-                LogIn k = applicationDbContext.LogIn.Find(logIn.email);
+                SignUp k = applicationDbContext.SignUp.Find(signUp.email);
                 if (k == null)
                 {
-                    applicationDbContext.LogIn.Add(logIn);
+                    applicationDbContext.SignUp.Add(signUp);
                     applicationDbContext.SaveChanges();
                 }
                 else
@@ -222,23 +221,23 @@ namespace Assignment4
             return View("LogIn");
         }
 
-        public IActionResult Apply(Student student)
-        {
-            if (ModelState.IsValid)
-            {
-                applicationDbContext.Student.Add(student);
-                applicationDbContext.SaveChanges();
-            }
-            return View("ApplyForm");
-        }
+        //public IActionResult Apply(Student student)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        applicationDbContext.Student.Add(student);
+        //        applicationDbContext.SaveChanges();
+        //    }
+        //    return View("ApplyForm");
+        //}
         public IActionResult AboutUs()
         {
             return View();
         }
-        public IActionResult ApplyForm()
-        {
-            return View();
-        }
+        //public IActionResult ApplyForm()
+        //{
+        //    return View();
+        //}
 
 
         public IActionResult Index()

@@ -67,7 +67,7 @@
     </form>
 </div>
 
-<div class="container">
+@*<div class="container">
 
     @if (Model != null)
     {
@@ -132,7 +132,7 @@
     }
 
 
-</div>
+</div>*@
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <div id="chartContainer">
     <script type="text/javascript">
@@ -155,7 +155,7 @@
             },
             data: [
                 {
-                    type: "area", //change type to bar, line, area, pie, etc
+                    type: "pie", //change type to bar, line, area, pie, etc
                     dataPoints: [
                         { label: "@Model.results[0].schoolName", y: @Model.results[0].tuitionOutState },
                         {  label: "@Model.results[1].schoolName", y:  @Model.results[1].tuitionOutState },

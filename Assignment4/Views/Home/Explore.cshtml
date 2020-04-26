@@ -5,9 +5,19 @@
 @model Assignment4.Models.EF_Models.UniversityData
 @{int i = 0;}
 
+<head>
+    <style>
+        .container
+        {
+            margin-top: 100px;
+        }
+    </style>
+</head>
+
 <div class="row">
     <div class="col-sm-6">
         <form asp-controller="Home" asp-action="GetUniversitiesByState" method="post">
+            <label>Search By State</label>
             <select name="state">
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
@@ -62,16 +72,18 @@
                 <option value="WY">Wyoming</option>
 
             </select>
-            <button type="submit">Search</button>
+            <button type="submit" class="btn">Go</button>
         </form>
     </div>
     <div class="col-sm-6">
         <form asp-controller="Home" asp-action="GetUniversitiesByName" method="post">
-            <input type="text" class="rounded" name="universityName" placeholder="University Name">
-            <button type="submit">Search</button>
+            <label>Search by Name</label>
+            <input type="text" class="rounded" name="universityName" placeholder="Florida">
+            <button type="submit" class="btn">Go</button>
         </form>
     </div>
 </div>
+
 <div class="container">
 
     @if (Model != null)
