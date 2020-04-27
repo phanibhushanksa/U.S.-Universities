@@ -19,10 +19,15 @@
             background-repeat: no-repeat;
             background-size: cover;
         }
-        h1,label,p
+        h1,label,p,h3
         {
             color: white;
         }
+
+       .cust
+       {
+           font-family: 'Times New Roman', Times, serif;
+       }
 
         nav {
             background-color: orangered;
@@ -30,8 +35,9 @@
     </style>
 </head>
 <body>
-    <h1 class="text-left">Dream University<img src="~/Img/usa1.png" width="40" ;height="40"></h1>
+    <h1 class="text-left cust">Dream Universities<img src="~/Img/usa1.png" width="40" ;height="40"></h1>
     <br />
+    <h3>You are at the correct place....</h3>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark ">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,6 +66,7 @@
                     <li class="nav-item active">
                         <a class="nav-link custom" asp-controller="Home" asp-action="SignUp">Register</a>
                     </li>
+                    
                 </ul>
 
             </div>

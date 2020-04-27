@@ -291,6 +291,22 @@ namespace Assignment4
             return View("RegisteredUsers",allUsers);
         }
 
+        public IActionResult UpdateUser(string email)
+        {
+            ViewBag.email = email;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult UpdateUser(SignUp userChanges)
+        {
+            var user = applicationDbContext.Attach(userChanges);
+            user.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            applicationDbContext.SaveChanges();
+            IEnumerable<SignUp> allUsers = applicationDbContext.SignUp;
+            return View("RegisteredUsers", allUsers);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
