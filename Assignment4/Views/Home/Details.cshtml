@@ -19,7 +19,7 @@
 
         *{
             box-sizing: border-box;
-        }
+        } 
 
         /* Full-width input fields */
         p {
@@ -29,6 +29,7 @@
             display: inline-block;
             border: none;
             background: #f1f1f1;
+            color:black;
         }
 
 
@@ -54,7 +55,7 @@
 <body>
     <div class="container">
         <h1>@Model.results[0].schoolName</h1>
-        <a href=@url><h6 class="card-subtitle mb-2 text-muted">@Model.results[0].schoolUrl</h6></a>
+        <a href=@url><h6 @Model.results[0].schoolUrl</h6></a>
         <hr />
 
         <label><b>City:</b></label>
@@ -91,7 +92,7 @@
             <p class="card-text">Data Not Available</p>
         }
 
-        <a href="#" class="card-link">Add to Favourites</a>
+        @*<a asp-action="addFav" asp-controller="Home" class="card-link">Add to Favourites</a>*@
         <br />
     </div>
    

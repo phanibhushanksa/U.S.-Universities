@@ -10,7 +10,7 @@ namespace Assignment4.Migrations
                 name: "Results",
                 columns: table => new
                 {
-                    id = table.Column<int>(nullable: false)
+                    uId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     tuitionOutState = table.Column<int>(nullable: true),
                     schoolCity = table.Column<string>(nullable: true),
@@ -22,7 +22,7 @@ namespace Assignment4.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Results", x => x.id);
+                    table.PrimaryKey("PK_Results", x => x.uId);
                 });
 
             migrationBuilder.CreateTable(
@@ -30,7 +30,10 @@ namespace Assignment4.Migrations
                 columns: table => new
                 {
                     email = table.Column<string>(nullable: false),
-                    password = table.Column<string>(nullable: true)
+                    name = table.Column<string>(nullable: true),
+                    cNumber = table.Column<string>(nullable: true),
+                    university = table.Column<string>(nullable: true),
+                    major = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

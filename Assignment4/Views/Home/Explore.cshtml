@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Explore";
 }
 @model Assignment4.Models.EF_Models.UniversityData
@@ -7,28 +6,55 @@
 
 <head>
     <style>
+
+
+        .Home {
+            text-decoration: none;
+            display: initial;
+            padding: 10px 20px;
+            color: black;
+            text-align: center;
+            font-size: 20px;
+            font-family: calibri;
+            background-color: orangered;
+            color: seashell;
+            <button type="button" class="btn btn-primary">Default</button>
+        }
+
+        h1 {
+            color: white;
+        }
+
+
+
+
         .container {
             padding: 16px;
             width: 100%;
             margin-top: 100px;
         }
-       
+
         label {
             margin: 20px;
         }
-        #uName
-        {
+
+        #uName {
             max-width: 300px;
-            padding : 10px;
+            padding: 10px;
         }
-        table
-        {
+
+        table {
             max-width: 100%;
             min-width: 100%;
         }
-        select
-        {
+
+        select {
             height: 40px;
+        }
+
+        label {
+            color: white;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -97,7 +123,7 @@
     <div class="col-sm-6">
         <form asp-controller="Home" asp-action="GetUniversitiesByName" method="post">
             <label>Search by Name</label>
-            <input type="text" id = "uName" required class="rounded" name="universityName" placeholder="University of South Florida">
+            <input type="text" id="uName" required class="rounded" name="universityName" placeholder="University of South Florida">
             <button type="submit" class="btn btn-dark">Go</button>
         </form>
     </div>
@@ -110,7 +136,7 @@
         if (Model.metadata.total != 0)
         {
             <div>
-                <table class="table-bordered table-striped table-hover .table-responsive{-sm|-md|-lg|-xl}">
+                <table class="table-bordered table-light table-striped table-hover .table-responsive{-sm|-md|-lg|-xl}">
                     <thead class="thead-dark">
                         <tr>
                             <th>S.No</th>
@@ -146,7 +172,7 @@
 
                                 <td>
                                     <div class="text-center">
-                                        <a asp-controller="Home" asp-action="Details" asp-route-id=@item.id>Details</a>
+                                        <a asp-controller="Home" asp-action="Details" asp-route-id=@item.uId>Details</a>
                                     </div>
                                 </td>
                             </tr>
@@ -162,4 +188,3 @@
     }
 
 </div>
-

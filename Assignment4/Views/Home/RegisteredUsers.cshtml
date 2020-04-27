@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewData["Title"] = "RegisteredUsers";
+}
+
+@model IEnumerable<Assignment4.Models.EF_Models.SignUp>
+
+@{ 
+    int i = 0;
+}
+
+    <head>
+        <style>
+
+
+            .Home {
+                text-decoration: none;
+                display: initial;
+                padding: 10px 20px;
+                color: black;
+                text-align: center;
+                font-size: 20px;
+                font-family: calibri;
+                background-color: orangered;
+               
+                <button type="button" class="btn btn-primary">Default</button>
+            }
+
+            .container {
+                padding: 16px;
+                width: 100%;
+                margin-top: 100px;
+            }
+
+            table {
+                max-width: 100%;
+                min-width: 100%;
+            }
+
+            h1 {
+                color: white;
+            }
+            h2
+            {
+                text-align:center;
+            }
+        </style>
+    </head>
+
+    <div class="container">
+
+        @if (Model != null)
+        {
+            if (Model.Any())
+            {
+
+                <div>
+                    <table class="table-bordered table-striped table-light table-hover .table-responsive{-sm|-md|-lg|-xl}">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>S.No</th>
+                                <th> Email </th>
+                                <th>Contact Number </th>
+                                <th>Interested University</th>
+                                <th>Interested Major</th>
+                                <th>       </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                i = i + 1;
+                                <tr>
+                                    <td>
+                                        @i
+                                    </td>
+                                    <td>
+                                        @item.email
+                                    </td>
+                                    <td>
+                                        @item.cNumber
+
+                                    </td>
+                                    <td>
+                                        @item.university
+                                    </td>
+                                    <td>
+                                        @item.major
+                                    </td>
+                                    <td>
+                                        <a asp-controller="Home" asp-action="DeleteUser" asp-route-email=@item.email>Delete</a>
+                                        <span>|</span>
+                                        <a asp-controller="Home" asp-action="UpdateUser" asp-route-email=@item.email>Update</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <h2 class="text-danger">No registered users found</h2>
+            }
+
+        }
+
+
+    </div>

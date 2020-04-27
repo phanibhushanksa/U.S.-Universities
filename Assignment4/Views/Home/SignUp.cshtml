@@ -4,13 +4,17 @@
         body {
             font-family: Arial, Helvetica, sans-serif;
         }
+        label,p
+        {
+            color: white;
+        }
 
         * {
             box-sizing: border-box
         }
 
         /* Full-width input fields */
-        input[type=text], input[type=password] {
+        input[type=text], input[type=password], input[type=email] {
             width: 100%;
             padding: 15px;
             margin: 5px 0 22px 0;
@@ -19,7 +23,7 @@
             background: #f1f1f1;
         }
 
-            input[type=text]:focus, input[type=password]:focus {
+            input[type=text]:focus, input[type=password], input[type=email]:focus {
                 background-color: #ddd;
                 outline: none;
             }
@@ -72,8 +76,7 @@
         }
 
         span
-        {
-           
+        {       
             margin: auto;
         }
     </style>
@@ -82,29 +85,36 @@
 
     <form asp-controller="Home" asp-action="SignUp" method="post" style="border:1px solid #ccc">
         <div class="container">
-            <h1>Sign Up</h1>
+            <h1>Register</h1>
             <p> Register for email Updates</p>
             <hr>
 
             <label for="email"><b>Email</b></label>
-            <input type="text" placeholder="Enter Email" name="email" required>
+            <input type="email" placeholder="Enter Email" name="email" required>
             <br />
 
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" required>
-
-            <label for="psw-repeat"><b>Repeat Password</b></label>
-            <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
-
-            @if(ViewBag.errorCode == 1)
+            @if (ViewBag.errorCode == 1)
             {
                 <span class="text-danger text-center">@ViewBag.errorMessage</span>
-                <br/>
+                <br />
             }
+            <label for="name"><b>Name</b></label>
+            <input type="text" placeholder="Suraj Argula" name="name" required>
+
+            <label for="cNumber"><b>Contact Number</b></label>
+            <input type="text" placeholder="9999999999" name="cNumber" required>
+
+            <label for="university"><b>Intersted University</b></label>
+            <input type="text" placeholder="USF" name="university" required>
+
+            <label for="major"><b>Intersted Major</b></label>
+            <input type="text" placeholder="Business Analytics" name="major" required>
+
+
 
 
             <div class="clearfix text-center">
-                <button type="submit" class="signupbtn">Sign Up</button>
+                <button type="submit" class="signupbtn">Register</button>
             </div>
         </div>
     </form>

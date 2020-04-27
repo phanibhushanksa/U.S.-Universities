@@ -5,16 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System.Net.Http;
 using Assignment4; 
-
 //using Assignment4.Models;
 using static Assignment4.Models.EF_Models;
 using Assignment4.Models;
 using Assignment4.DataAccess;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Diagnostics.Eventing.Reader;
+using Microsoft.EntityFrameworkCore;
 
 namespace Assignment4
 {
@@ -24,7 +21,7 @@ namespace Assignment4
         string apiFields = "&_fields=id,school.school_url,school.name,2018.student.size,school.city,latest.cost.tuition.out_of_state,school.accreditor_code,&per_page=30";
         string apiKey = "&api_key=ck1LVrQunLhfsjSgoithxWggF6ZbNSp3SvalD4d4";
         HttpClient httpClient;
-        UniversityData apiResponse = null;
+       
 
         private readonly ILogger<HomeController> _logger;
          ApplicationDbContext applicationDbContext;
@@ -63,6 +60,7 @@ namespace Assignment4
                 responseString = responseString.Replace("school.city", "schoolCity");
                 responseString = responseString.Replace("latest.cost.tuition.out_of_state", "tuitionOutState");
                 responseString = responseString.Replace("school.accreditor_code", "accCode");
+                responseString = responseString.Replace("id","uId");
             }
 
             // Parse the Json strings as C# objects
@@ -73,7 +71,12 @@ namespace Assignment4
                 //data = JsonConvert.DeserializeObject<UniversityData>(responseString);
             }
             ViewBag.search = "name";
-            apiResponse = data;
+
+            foreach (Results item in data.results)
+            {
+                applicationDbContext.Results.Add(item);
+            }
+          
             return View("Explore", data);
         }
 
@@ -101,14 +104,13 @@ namespace Assignment4
                 responseString = responseString.Replace("school.city", "schoolCity");
                 responseString = responseString.Replace("latest.cost.tuition.out_of_state", "tuitionOutState");
                 responseString = responseString.Replace("school.accreditor_code", "accCode");
+                responseString = responseString.Replace("id", "uId");
             }
 
             // Parse the Json strings as C# objects
             if (!responseString.Equals(""))
             {
-                data = System.Text.Json.JsonSerializer.Deserialize<UniversityData>(responseString);
-               
-                //data = JsonConvert.DeserializeObject<UniversityData>(responseString);
+                data = System.Text.Json.JsonSerializer.Deserialize<UniversityData>(responseString);                            
             }
            
             return View("Explore", data);
@@ -138,47 +140,46 @@ namespace Assignment4
                 responseString = responseString.Replace("school.city", "schoolCity");
                 responseString = responseString.Replace("latest.cost.tuition.out_of_state", "tuitionOutState");
                 responseString = responseString.Replace("school.accreditor_code", "accCode");
-
+                responseString = responseString.Replace("id", "uId");
             }
 
             // Parse the Json strings as C# objects
             if (!responseString.Equals(""))
             {
-                data = System.Text.Json.JsonSerializer.Deserialize<UniversityData>(responseString);
-                //data = JsonConvert.DeserializeObject<UniversityData>(responseString);
+                data = System.Text.Json.JsonSerializer.Deserialize<UniversityData>(responseString);               
             }
             ViewBag.State = state;
             return View("Charts", data);
         }
 
-        [HttpPost]
-        public IActionResult Login(SignUp logIn)
-        {
-            SignUp k = applicationDbContext.SignUp.Find(logIn.email);
-            //var UserCheck = applicationDbContext.LogIn.Where(x => x.email == logIn.email && x.password == logIn.password);
-            if (k!=null)
-            {
-                if (k.password == logIn.password)
-                {
-                    ViewBag.successMessage = "Login Successful";
-                    ViewBag.successCode = 1;
-                    return View("Index");
-                }
-                else
-                {
-                    ViewBag.successMessage = "Invalid Credentials";
-                    ViewBag.successCode = 0;
-                }
+        //[HttpPost]
+        //public IActionResult Login(SignUp logIn)
+        //{
+        //    SignUp k = applicationDbContext.SignUp.Find(logIn.email);
+        //    //var UserCheck = applicationDbContext.LogIn.Where(x => x.email == logIn.email && x.password == logIn.password);
+        //    if (k!=null)
+        //    {
+        //        if (k.password == logIn.password)
+        //        {
+        //            ViewBag.successMessage = "Login Successful";
+        //            ViewBag.successCode = 1;
+        //            return View("Index");
+        //        }
+        //        else
+        //        {
+        //            ViewBag.successMessage = "Invalid Credentials";
+        //            ViewBag.successCode = 0;
+        //        }
 
-            }
-            else
-            {
-                ViewBag.successMessage = "User not found, please SignUp to Login";
-                ViewBag.successCode = 0;
+        //    }
+        //    else
+        //    {
+        //        ViewBag.successMessage = "User not found, please SignUp to Login";
+        //        ViewBag.successCode = 0;
 
-            }
-                return View();
-        }
+        //    }
+        //        return View();
+        //}
 
         public IActionResult LogIn()
         {
@@ -206,11 +207,11 @@ namespace Assignment4
             string responseString = "";
             UniversityData data = null;
 
-            // Connect to the IEXTrading API and retrieve information
+            
             httpClient.BaseAddress = new Uri(API_PATH);
             HttpResponseMessage response = httpClient.GetAsync(API_PATH).GetAwaiter().GetResult();
 
-            // Read the Json objects in the API response
+            
             if (response.IsSuccessStatusCode)
             {
                 responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
@@ -220,18 +221,16 @@ namespace Assignment4
                 responseString = responseString.Replace("school.city", "schoolCity");
                 responseString = responseString.Replace("latest.cost.tuition.out_of_state", "tuitionOutState");
                 responseString = responseString.Replace("school.accreditor_code", "accCode");
-
+                responseString = responseString.Replace("id", "uId");
             }
 
-            // Parse the Json strings as C# objects
+           
             if (!responseString.Equals(""))
             {
-                data = System.Text.Json.JsonSerializer.Deserialize<UniversityData>(responseString);
-                //data = JsonConvert.DeserializeObject<UniversityData>(responseString);
+                data = System.Text.Json.JsonSerializer.Deserialize<UniversityData>(responseString);              
             }
             
             return View(data);
-
         }
 
 
@@ -274,6 +273,23 @@ namespace Assignment4
             return View();
         }
 
+        public IActionResult RegisteredUsers()
+        {
+            IEnumerable<SignUp> allUsers = applicationDbContext.SignUp;
+            return View(allUsers);
+        }
+
+        public IActionResult DeleteUser(string email)
+        {
+            SignUp user = applicationDbContext.SignUp.Find(email);
+            if (user != null)
+            {
+                applicationDbContext.SignUp.Remove(user);
+                applicationDbContext.SaveChanges();
+            }
+            IEnumerable<SignUp> allUsers = applicationDbContext.SignUp;
+            return View("RegisteredUsers",allUsers);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

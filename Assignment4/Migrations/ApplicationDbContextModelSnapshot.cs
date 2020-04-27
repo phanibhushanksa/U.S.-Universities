@@ -21,7 +21,7 @@ namespace Assignment4.Migrations
 
             modelBuilder.Entity("Assignment4.Models.EF_Models+Results", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("uId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -47,7 +47,7 @@ namespace Assignment4.Migrations
                     b.Property<int?>("tuitionOutState")
                         .HasColumnType("int");
 
-                    b.HasKey("id");
+                    b.HasKey("uId");
 
                     b.ToTable("Results");
                 });
@@ -57,7 +57,16 @@ namespace Assignment4.Migrations
                     b.Property<string>("email")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("password")
+                    b.Property<string>("cNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("major")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("university")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("email");

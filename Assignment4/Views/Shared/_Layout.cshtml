@@ -7,18 +7,33 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <style>
-        .custom{
-            float:right;
+
+        .custom {
+            float: right;
             padding-left: 50px;
         }
 
+        body {
+            background: url(/img/Univer.jpeg);
+            height: 100%;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        h1,label,p
+        {
+            color: white;
+        }
+
+        nav {
+            background-color: orangered;
+        }
     </style>
 </head>
 <body>
-    <h1 class="text-center">US Universties</h1>
+    <h1 class="text-left">Dream University<img src="~/Img/usa1.png" width="40" ;height="40"></h1>
     <br />
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark ">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -28,18 +43,21 @@
                     <li class="nav-item active">
                         <a class="nav-link" asp-controller="Home" asp-action="Index">Home<span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" asp-controller="Home" asp-action="Explore">Explore</a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" asp-controller="Home" asp-action="Charts">Charts</a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" asp-controller="Home" asp-action="AboutUs">AboutUs</a>
                     </li>
-                    <li class="nav-item ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" asp-controller="Home" asp-action="RegisteredUsers">Subscribers</a>
+                    </li>
+                    <li class="nav-item active">
                         <a class="nav-link custom" asp-controller="Home" asp-action="SignUp">Register</a>
                     </li>
                 </ul>

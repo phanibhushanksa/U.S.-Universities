@@ -17,14 +17,21 @@ namespace Assignment4.Models
         public class SignUp
         {
             [Key]
-            [Required]
+
             [EmailAddress]
             [Display(Name = "Email Address")]
             public string email { get; set; }
-            public string password { get; set; }
+            public string name { get; set; }
+
+            public string cNumber { get; set; }
+
+            public string university { get; set; }
+
+            public string major { get; set; }
 
         }
-      
+
+
         public class UniversityData
         {            
             public Metadata metadata { get; set; }
@@ -50,12 +57,13 @@ namespace Assignment4.Models
             public string schoolName { get; set; }
             public int? studentSize { get; set; }
 
-            [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+           
             [Key]
-            public int id { get; set; }
-
+            public int uId { get; set; }
             public int likesCount { get; set; }
 
         }
     }
+
+  
 }
