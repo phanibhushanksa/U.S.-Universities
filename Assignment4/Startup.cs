@@ -38,10 +38,11 @@ namespace Assignment4
             services.AddControllersWithViews();
             //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["Data:Project_DB:ConnectionString"]));
 
-            //var connection = @"Server=(localdb)\mssqllocaldb;Database=University_DB;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=University_DB;Trusted_Connection=True;ConnectRetryCount=0";
             //services.AddDbContext<ApplicationDbContext>
             //        (options => options.UseSqlServer(connection));
-            var connection = @"Server=tcp:university1.database.windows.net,1433;Initial Catalog=University_DB;Persist Security Info=False;User ID=Suraj362;Password=Bond@007;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            //Connection to the Azure Database
+            //var connection = @"Server=tcp:university1.database.windows.net,1433;Initial Catalog=University_DB;Persist Security Info=False;User ID=Suraj362;Password=Bond@007;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             services.AddDbContext<ApplicationDbContext>
                     (options => options.UseSqlServer(connection));
 
