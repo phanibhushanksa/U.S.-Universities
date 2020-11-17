@@ -17,8 +17,11 @@ namespace Assignment4
 {
     public class HomeController : Controller
     {
+        //base url for the API call
         string BASE_URL = "https://api.data.gov/ed/collegescorecard/v1/schools.json?";
+        //based on the API documentation, we are filtering out these fields.
         string apiFields = "&_fields=id,school.school_url,school.name,2018.student.size,school.city,latest.cost.tuition.out_of_state,school.accreditor_code,&per_page=30";
+        //API key to access the API data
         string apiKey = "&api_key=ck1LVrQunLhfsjSgoithxWggF6ZbNSp3SvalD4d4";
         HttpClient httpClient;
        
@@ -33,6 +36,23 @@ namespace Assignment4
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new
             System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+// method to convert he feild names and values that we recieve in the HTTP response from the API.
+        public string replaceString(string responseString)
+        {
+            string responseStringModified = responseString;
+            responseStringModified = responseStringModified.Replace("school.name", "schoolName");
+            responseStringModified = responseStringModified.Replace("school.school_url", "schoolUrl");
+            responseStringModified = responseStringModified.Replace("2018.student.size", "studentSize");
+            responseStringModified = responseStringModified.Replace("school.city", "schoolCity");
+            responseStringModified = responseStringModified.Replace("latest.cost.tuition.out_of_state", "tuitionOutState");
+            responseStringModified = responseStringModified.Replace("school.accreditor_code", "accCode");
+            responseStringModified = responseStringModified.Replace("id", "uId");
+            responseStringModified = responseStringModified.Replace("FloruIda", "Florida");
+            responseStringModified = responseStringModified.Replace("floruIda", "florida");
+
+            return responseStringModified;
         }
 
         [HttpPost]
@@ -54,13 +74,8 @@ namespace Assignment4
             if (response.IsSuccessStatusCode)
             {
                 responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                responseString = responseString.Replace("school.name", "schoolName");
-                responseString = responseString.Replace("school.school_url", "schoolUrl");
-                responseString = responseString.Replace("2018.student.size", "studentSize");
-                responseString = responseString.Replace("school.city", "schoolCity");
-                responseString = responseString.Replace("latest.cost.tuition.out_of_state", "tuitionOutState");
-                responseString = responseString.Replace("school.accreditor_code", "accCode");
-                responseString = responseString.Replace("id","uId");
+                
+                responseString = replaceString(responseString);
             }
 
             // Parse the Json strings as C# objects
@@ -98,13 +113,8 @@ namespace Assignment4
             if (response.IsSuccessStatusCode)
             {
                 responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                responseString = responseString.Replace("school.name", "schoolName");
-                responseString = responseString.Replace("school.school_url", "schoolUrl");
-                responseString = responseString.Replace("2018.student.size", "studentSize");
-                responseString = responseString.Replace("school.city", "schoolCity");
-                responseString = responseString.Replace("latest.cost.tuition.out_of_state", "tuitionOutState");
-                responseString = responseString.Replace("school.accreditor_code", "accCode");
-                responseString = responseString.Replace("id", "uId");
+                responseString = replaceString(responseString);
+
             }
 
             // Parse the Json strings as C# objects
@@ -134,13 +144,7 @@ namespace Assignment4
             if (response.IsSuccessStatusCode)
             {
                 responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                responseString = responseString.Replace("school.name", "schoolName");
-                responseString = responseString.Replace("school.school_url", "schoolUrl");
-                responseString = responseString.Replace("2018.student.size", "studentSize");
-                responseString = responseString.Replace("school.city", "schoolCity");
-                responseString = responseString.Replace("latest.cost.tuition.out_of_state", "tuitionOutState");
-                responseString = responseString.Replace("school.accreditor_code", "accCode");
-                responseString = responseString.Replace("id", "uId");
+                responseString = replaceString(responseString);
             }
 
             // Parse the Json strings as C# objects
@@ -152,34 +156,7 @@ namespace Assignment4
             return View("Charts", data);
         }
 
-        //[HttpPost]
-        //public IActionResult Login(SignUp logIn)
-        //{
-        //    SignUp k = applicationDbContext.SignUp.Find(logIn.email);
-        //    //var UserCheck = applicationDbContext.LogIn.Where(x => x.email == logIn.email && x.password == logIn.password);
-        //    if (k!=null)
-        //    {
-        //        if (k.password == logIn.password)
-        //        {
-        //            ViewBag.successMessage = "Login Successful";
-        //            ViewBag.successCode = 1;
-        //            return View("Index");
-        //        }
-        //        else
-        //        {
-        //            ViewBag.successMessage = "Invalid Credentials";
-        //            ViewBag.successCode = 0;
-        //        }
-
-        //    }
-        //    else
-        //    {
-        //        ViewBag.successMessage = "User not found, please SignUp to Login";
-        //        ViewBag.successCode = 0;
-
-        //    }
-        //        return View();
-        //}
+       
 
         public IActionResult LogIn()
         {
@@ -215,13 +192,7 @@ namespace Assignment4
             if (response.IsSuccessStatusCode)
             {
                 responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                responseString = responseString.Replace("school.name", "schoolName");
-                responseString = responseString.Replace("school.school_url", "schoolUrl");
-                responseString = responseString.Replace("2018.student.size", "studentSize");
-                responseString = responseString.Replace("school.city", "schoolCity");
-                responseString = responseString.Replace("latest.cost.tuition.out_of_state", "tuitionOutState");
-                responseString = responseString.Replace("school.accreditor_code", "accCode");
-                responseString = responseString.Replace("id", "uId");
+                responseString = replaceString(responseString);
             }
 
            

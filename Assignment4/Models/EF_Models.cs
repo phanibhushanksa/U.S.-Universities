@@ -19,6 +19,7 @@ namespace Assignment4.Models
             [Key]
 
             [EmailAddress]
+//server side validation for the email field.
             [Display(Name = "Email Address")]
             public string email { get; set; }
             public string name { get; set; }
